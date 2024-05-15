@@ -21,7 +21,8 @@ dateSelectionCalendar AS (
 
 	SELECT
 		DateSelected,
-		DateSelected - 373 AS DateSelectedForJoin,
+		-- Filed to adjust for the old data in the sales dataset
+		DateSelected - 4383 AS DateSelectedForJoin,
 		DATE_PART('dow', DateSelected) AS DayOfWeekNumber,
 		DAYNAME(DateSelected) AS DayOfWeekName,
 		DATE_PART('week', DateSelected) AS WeekNumber,
@@ -29,32 +30,22 @@ dateSelectionCalendar AS (
 		LEFT(MONTHNAME(DateSelected), 3) AS MonthName,
 		DATE_PART('quarter', DateSelected) AS Quarter,
 		DATE_PART('year', DateSelected) AS Year,
+		CONCAT(LEFT(MONTHNAME(DateSelected), 3), ' ' , DATE_PART('year', DateSelected)) AS MonthYear,
 		CONCAT('Q', DATE_PART('quarter', DateSelected), ' ' , DATE_PART('year', DateSelected)) AS QuarterYear,
+		DATE_TRUNC('month', DateSelected) AS FirstDayOfMonth,
+		DATE_TRUNC('quarter', DateSelected) AS FirstDayOfQuarter,
 		DateSelected - CURRENT_DATE AS RelativeDate,
-		
-		CASE 
-	    	WHEN DATE_PART('week', DateSelected) = DATE_PART('week', CURRENT_DATE) AND DATE_PART('year', DateSelected) = DATE_PART('year', CURRENT_DATE) THEN 0
-	        ELSE (DATE_PART('week', DateSelected) - DATE_PART('week', CURRENT_DATE)) + (DATE_PART('year', DateSelected) - DATE_PART('year', CURRENT_DATE)) * 52
-	  	END AS RelativeWeek,
-		
-		CASE 
-	    	WHEN DATE_PART('month', DateSelected) = DATE_PART('month', CURRENT_DATE) AND DATE_PART('year', DateSelected) = DATE_PART('year', CURRENT_DATE) THEN 0
-	        ELSE (DATE_PART('month', DateSelected) - DATE_PART('month', CURRENT_DATE)) + (DATE_PART('year', DateSelected) - DATE_PART('year', CURRENT_DATE)) * 12
-	  	END AS RelativeMonth,
-
-	    CASE 
-	    	WHEN DATE_PART('quarter', DateSelected) = DATE_PART('quarter', CURRENT_DATE) AND DATE_PART('year', DateSelected) = DATE_PART('year', CURRENT_DATE) THEN 0
-	        ELSE (DATE_PART('quarter', DateSelected) - DATE_PART('quarter', CURRENT_DATE)) + (DATE_PART('year', DateSelected) - DATE_PART('year', CURRENT_DATE)) * 4 
-	  	END AS RelativeQuarter
+		DATE_DIFF('week', CURRENT_DATE, DateSelected) AS RelativeWeek,
+		DATE_DIFF('month', CURRENT_DATE, DateSelected) AS RelativeMonth,
+	  	DATE_DIFF('quarter', CURRENT_DATE, DateSelected) AS RelativeQuarter
 	  	
-	  	
-		
-		
 	FROM
 		datesSelection
 
 )
 
-
 SELECT * FROM  dateSelectionCalendar
+
+
+
 
