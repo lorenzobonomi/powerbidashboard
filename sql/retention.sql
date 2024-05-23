@@ -15,7 +15,7 @@ WITH salesDataWithQuarter AS (
 	LEFT JOIN
 		main.calendar
 	ON
-		main.salesData.InvoiceDate = main.calendar.DateSelectedForJoin
+		main.salesData.InvoiceDate = main.calendar.DateSelectedForJoin 
 	
 	WHERE
 		CustomerID IS NOT NULL
