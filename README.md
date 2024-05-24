@@ -19,14 +19,17 @@ View with a decomposition tree:
 <img src = './pictures/project41.png' alt = 'Diagram' title = 'Diagram' width = '70%'>
 
 
+
 View with Retention analytics:
 
 <img src = './pictures/project42.png' alt = 'Diagram' title = 'Diagram' width = '70%'>
 
 
+
 View with actual data and the predicted data point from the Jupyter Notebook model:
 
 <img src = './pictures/project43.png' alt = 'Diagram' title = 'Diagram' width = '70%'>
+
 
 
 View with data exploration option:
